@@ -10,8 +10,8 @@
 Models such as Qwen3.8-Flash-Next use only a small part of their weights for each token: a few of hundreds of
 “experts” per layer. ExpertStream keeps in memory what every token needs and the experts in use, and reads the other
 experts from the SSD in milliseconds when a token needs them. Qwen3.8-Flash-Next is a 93.7 GB model; with ExpertStream
-it runs on a MacBook Pro with 64 GB at about 20 tokens per second. On Linux it runs models larger than the GPU memory
-of a graphics card, or next to other services on an NVIDIA GB10.
+it runs on a MacBook Pro with 64 GB at about 20 tokens per second. On Linux the same works with models far larger
+than the system RAM: DeepSeek-V4.1-Flash, a 459 GB model, runs on one NVIDIA GB10 with 128 GB.
 
 * **Works with what you use:** your apps talk to ExpertStream like to Ollama or to an OpenAI-compatible server. With
   Ollama installed, ExpertStream's models appear in Ollama's own model list.
@@ -66,16 +66,16 @@ Vulkan loader: `libvulkan1` / `vulkan-loader`).
 **Linux** (here for an NVIDIA PC; use the file for your computer)
 
 ```bash
-tar xzf NEXIVES-ExpertStream-0.1.0-linux-x86_64-nvidia.tar.gz
-cd NEXIVES-ExpertStream-0.1.0-linux-x86_64-nvidia
+tar xzf NEXIVES-ExpertStream-0.2.0-linux-x86_64-nvidia.tar.gz
+cd NEXIVES-ExpertStream-0.2.0-linux-x86_64-nvidia
 ./install.sh                 # for your user, no administrator rights; sudo ./install.sh for all users
 expertstream doctor          # the GPU, the engine and the memory ExpertStream found
 expertstream pull qwen3.6-35b-a3b:q4
 expertstream serve           # web view: http://127.0.0.1:11435/
 ```
 
-Or install the package: `sudo apt install ./nexives-expertstream-nvidia_0.1.0_amd64.deb` (Debian, Ubuntu) or
-`sudo dnf install ./nexives-expertstream-nvidia-0.1.0-1.x86_64.rpm` (RHEL, Fedora, Amazon Linux).
+Or install the package: `sudo apt install ./nexives-expertstream-nvidia_0.2.0_amd64.deb` (Debian, Ubuntu) or
+`sudo dnf install ./nexives-expertstream-nvidia-0.2.0-1.x86_64.rpm` (RHEL, Fedora, Amazon Linux).
 `expertstream service install` starts ExpertStream at login (`--at-boot`: when the computer boots); with Ollama
 installed as a system service, `sudo expertstream ollama on` once puts ExpertStream's models into Ollama's list.
 
@@ -89,6 +89,21 @@ shasum -a 256 NEXIVES-ExpertStream-*-macOS-arm64.dmg      # Mac
 sha256sum -c NEXIVES-ExpertStream-*-linux-*.tar.gz.sha256  # Linux
 ```
 
+## Older versions and switching back
+
+Every version stays on the **[releases page](../../releases)** with all its files: a new version never replaces an
+older one. If a new version does not work well for you, install the older file over it. Models and settings in
+`~/.expertstream` are kept.
+
+| Installed from | Switch back |
+|---|---|
+| Mac disk image | open the older disk image and drag ExpertStream to Applications (Replace) |
+| Linux tarball | unpack the older tarball and run its `./install.sh` |
+| .deb (Debian, Ubuntu) | `sudo apt install --allow-downgrades ./nexives-expertstream-<gpu>_<version>_<arch>.deb` |
+| .rpm (RHEL, Fedora, Amazon Linux) | `sudo dnf downgrade ./nexives-expertstream-<gpu>-<version>-1.<arch>.rpm` |
+
+`expertstream --version` shows the version you run. Each release's notes say what changed and which models need it.
+
 ## Measured
 
 | Computer and model | Memory used | Speed |
@@ -97,6 +112,7 @@ sha256sum -c NEXIVES-ExpertStream-*-linux-*.tar.gz.sha256  # Linux
 | MacBook Pro (M5 Pro, 64 GB), Qwen3.6-35B (Q4, 22.4 GB file) | 9 GB instead of 22 GB with a third of the experts cached | 38 tokens/s (64 with the whole model in memory) |
 | NVIDIA GB10 (128 GB) next to a vLLM service holding 97 GB, Qwen3.6-35B | 11.5 GB instead of 26.9 GB: 57 % less memory, with 22 % of the experts cached | 13–18 tokens/s; prompts up to 790 tokens/s |
 | PC with an NVIDIA T4 (16 GB GPU memory), Qwen3.6-35B | 14.8 GB of GPU memory instead of 25.1 GB (41 % less) — the model does not fit the card without ExpertStream | 10–24 tokens/s on a test machine with a slow SSD |
+| NVIDIA GB10 (128 GB), DeepSeek-V4.1-Flash (4 bits, 459 GB file: 3.5 times the system RAM) | 123 GB of the 130.6 GB of system RAM, with 35 % of the experts cached | 4–7 tokens/s |
 
 Speed depends on how much memory is free for the expert cache and on the SSD: close memory-heavy programs for the best
 result.
