@@ -125,9 +125,9 @@ Free for personal, non-commercial use. Use by or for a company or other organisa
 service, and serving other computers on the network need a business license: **info@nexives.com**. The license terms
 are included in the app and in the Linux packages.
 
-This repository contains the downloads only; NEXIVES ExpertStream is not open source. It includes llama.cpp (MIT
-license), and the Linux packages include NVIDIA CUDA and AMD ROCm libraries under their own licenses; the notices are
-in the app and in the packages.
+This repository contains the downloads only; NEXIVES ExpertStream is not open source. It contains open source
+components, among them llama.cpp (MIT license), and the Linux packages contain NVIDIA CUDA and AMD ROCm libraries, each
+under its own license: see [Third-party software](THIRD_PARTY_NOTICES.md) for the list and the license texts.
 
 ## Contact
 
