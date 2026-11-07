@@ -1,11 +1,11 @@
 # Third-party software in NEXIVES ExpertStream
 
-NEXIVES ExpertStream is proprietary software of NEXIVES (see [License](README.md#license)). It contains the open
-source and other third-party components listed here. Each of them is licensed by its authors under its own license,
-shown in the table, and that license applies to the component. The full license texts are in the
-[licenses](licenses/) folder of this repository.
+NEXIVES ExpertStream is proprietary software of NEXIVES, licensed under its end user license agreement. It contains
+the open source and other third-party components listed here. Each of them is licensed by its authors under its own
+license, shown in the table, and that license applies to the component. The full license texts are in the
+[licenses](licenses/) folder next to this file.
 
-This list is for **version 0.2.1**. The .deb and .rpm packages contain the same components as the tarball for the
+This list is for **version 0.2.2**. The .deb and .rpm packages contain the same components as the tarball for the
 same computer.
 
 Model weights are not part of ExpertStream: you download models yourself, and each model has its own license (see
@@ -16,6 +16,7 @@ the model's page on Hugging Face).
 * [Engine — in every package](#engine--in-every-package)
 * [Linux packages](#linux-packages)
 * [Mac app](#mac-app)
+* [Fonts of the web view — in every package](#fonts-of-the-web-view--in-every-package)
 * [Source code](#source-code)
 
 ## Engine — in every package
@@ -140,6 +141,18 @@ packaged with PyInstaller, together with the Python runtime and these libraries.
 | truststore | 0.10.5 | MIT | [text](licenses/python/truststore-0.10.5/) |
 | typing_extensions | 4.16.0 | PSF-2.0 | [text](licenses/python/typing_extensions-4.16.0/) |
 
+## Fonts of the web view — in every package
+
+The web view of `expertstream serve` brings its own fonts. IBM Plex Sans and IBM Plex Mono are IBM's web font files
+as IBM publishes them (npm packages `@ibm/plex-sans` 1.1.0 and `@ibm/plex-mono` 2.5.0), unchanged; Manrope is its
+variable font from Google Fonts, reduced to the Latin characters the page uses and converted to WOFF2.
+
+| Font | Version | License | License text |
+| --- | --- | --- | --- |
+| IBM Plex Sans — © 2017 IBM Corp., Reserved Font Name "Plex" | 1.1.0 | SIL Open Font License 1.1 | [text](licenses/fonts/IBM-Plex-Sans-OFL.txt) |
+| IBM Plex Mono — © 2017 IBM Corp., Reserved Font Name "Plex" | 2.5.0 | SIL Open Font License 1.1 | [text](licenses/fonts/IBM-Plex-Mono-OFL.txt) |
+| Manrope — © 2018 The Manrope Project Authors | 4.505 | SIL Open Font License 1.1 | [text](licenses/fonts/Manrope-OFL.txt) |
+
 ## Source code
 
 * **tqdm** is licensed under MPL-2.0 (and MIT). ExpertStream contains it unchanged; its source code is available from
@@ -148,6 +161,6 @@ packaged with PyInstaller, together with the Python runtime and these libraries.
   separate shared libraries (`libelf.so.1`, `libnuma.so.1`) that you may replace with your own build. They are the
   libraries of the Rocky Linux 9 packages elfutils 0.194-1.el9.rocky.0.1 and numactl 2.0.19-3.el9, unchanged except
   for a library search path (`$ORIGIN`) added to the files. Their complete source code is on the
-  [0.2.1 release page](https://github.com/NEXIVES/expertstream/releases/tag/v0.2.1):
+  [0.2.2 release page](https://github.com/NEXIVES/expertstream/releases/tag/v0.2.2):
   `elfutils-0.194-1.el9.rocky.0.1.src.rpm` and `numactl-2.0.19-3.el9.src.rpm` (the Rocky Linux source packages, each
   with a `.sha256` checksum).

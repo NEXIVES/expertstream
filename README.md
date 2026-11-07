@@ -39,7 +39,7 @@ next to it:
 |---|---|
 | Mac | Apple silicon (M1 or later); 32 GB of memory or more, 64 GB for Qwen3.8-Flash-Next |
 | macOS | 14 Sonoma or later |
-| SSD space | the models you download (Qwen3.8-Flash-Next IQ4_XS: 93.7 GB) plus 1 GB for the app |
+| SSD space | the models you download (Qwen3.8-Flash-Next IQ4_XS: 93.7 GB plus its 2.8 GB MTP layer) plus 1 GB for the app |
 
 ### Linux
 
@@ -66,16 +66,16 @@ Vulkan loader: `libvulkan1` / `vulkan-loader`).
 **Linux** (here for an NVIDIA PC; use the file for your computer)
 
 ```bash
-tar xzf NEXIVES-ExpertStream-0.2.1-linux-x86_64-nvidia.tar.gz
-cd NEXIVES-ExpertStream-0.2.1-linux-x86_64-nvidia
+tar xzf NEXIVES-ExpertStream-0.2.2-linux-x86_64-nvidia.tar.gz
+cd NEXIVES-ExpertStream-0.2.2-linux-x86_64-nvidia
 ./install.sh                 # for your user, no administrator rights; sudo ./install.sh for all users
 expertstream doctor          # the GPU, the engine and the memory ExpertStream found
 expertstream pull qwen3.6-35b-a3b:q4
 expertstream serve           # web view: http://127.0.0.1:11435/
 ```
 
-Or install the package: `sudo apt install ./nexives-expertstream-nvidia_0.2.1_amd64.deb` (Debian, Ubuntu) or
-`sudo dnf install ./nexives-expertstream-nvidia-0.2.1-1.x86_64.rpm` (RHEL, Fedora, Amazon Linux).
+Or install the package: `sudo apt install ./nexives-expertstream-nvidia_0.2.2_amd64.deb` (Debian, Ubuntu) or
+`sudo dnf install ./nexives-expertstream-nvidia-0.2.2-1.x86_64.rpm` (RHEL, Fedora, Amazon Linux).
 `expertstream service install` starts ExpertStream at login (`--at-boot`: when the computer boots); with Ollama
 installed as a system service, `sudo expertstream ollama on` once puts ExpertStream's models into Ollama's list.
 
@@ -108,10 +108,11 @@ older one. If a new version does not work well for you, install the older file o
 
 | Computer and model | Memory used | Speed |
 |---|---|---|
-| MacBook Pro (M5 Pro, 64 GB), Qwen3.8-Flash-Next IQ4_XS (180B, 93.7 GB file) | 36 GB instead of 62 GB: 42 % less memory for this model, 26 GB of system RAM freed | about 20–22 tokens/s; long prompts about 300–400 tokens/s |
-| MacBook Pro (M5 Pro, 64 GB), Qwen3.6-35B (Q4, 22.4 GB file) | 9 GB instead of 22 GB with a third of the experts cached | 38 tokens/s (64 with the whole model in memory) |
+| MacBook Pro (M5 Pro, 64 GB), Qwen3.8-Flash-Next IQ4_XS (180B, 93.7 GB file) | 36 GB instead of 62 GB: 42 % less memory for this model, 26 GB of system RAM freed | about 25–30 tokens/s with MTP drafting (19–20 without); long prompts about 300–400 tokens/s |
+| MacBook Pro (M5 Pro, 64 GB), Qwen3.6-35B (Q4 with its MTP layer, 22.9 GB file) | 9 GB instead of 22 GB with a third of the experts cached | 45–47 tokens/s with MTP drafting (37–41 without); with the whole model in memory 52–97 (54–62 without) |
 | NVIDIA GB10 (128 GB) next to a vLLM service holding 97 GB, Qwen3.6-35B | 11.5 GB instead of 26.9 GB: 57 % less memory, with 22 % of the experts cached | 13–18 tokens/s; prompts up to 790 tokens/s |
-| PC with an NVIDIA T4 (16 GB GPU memory), Qwen3.6-35B | 14.8 GB of GPU memory instead of 25.1 GB (41 % less) — the model does not fit the card without ExpertStream | 10–24 tokens/s on a test machine with a slow SSD |
+| PC with an NVIDIA T4 (16 GB GPU memory, 32 GB system RAM), Qwen3.6-35B with its MTP layer | about half of the experts cached in GPU memory — the model does not fit the card without ExpertStream | 43–44 tokens/s with MTP drafting (37 without) |
+| PC with an NVIDIA T4 (16 GB GPU memory, 16 GB system RAM), Qwen3.6-35B | 14.8 GB of GPU memory instead of 25.1 GB (41 % less) | 10–24 tokens/s on a test machine with a slow SSD |
 | NVIDIA GB10 (128 GB), DeepSeek-V4.1-Flash (4 bits, 459 GB file: 3.5 times the system RAM) | 123 GB of the 130.6 GB of system RAM, with 35 % of the experts cached | 4–7 tokens/s |
 
 Speed depends on how much memory is free for the expert cache and on the SSD: close memory-heavy programs for the best
