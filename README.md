@@ -66,16 +66,16 @@ Vulkan loader: `libvulkan1` / `vulkan-loader`).
 **Linux** (here for an NVIDIA PC; use the file for your computer)
 
 ```bash
-tar xzf NEXIVES-ExpertStream-0.2.2-linux-x86_64-nvidia.tar.gz
-cd NEXIVES-ExpertStream-0.2.2-linux-x86_64-nvidia
+tar xzf NEXIVES-ExpertStream-0.2.3-linux-x86_64-nvidia.tar.gz
+cd NEXIVES-ExpertStream-0.2.3-linux-x86_64-nvidia
 ./install.sh                 # for your user, no administrator rights; sudo ./install.sh for all users
 expertstream doctor          # the GPU, the engine and the memory ExpertStream found
 expertstream pull qwen3.6-35b-a3b:q4
 expertstream serve           # web view: http://127.0.0.1:11435/
 ```
 
-Or install the package: `sudo apt install ./nexives-expertstream-nvidia_0.2.2_amd64.deb` (Debian, Ubuntu) or
-`sudo dnf install ./nexives-expertstream-nvidia-0.2.2-1.x86_64.rpm` (RHEL, Fedora, Amazon Linux).
+Or install the package: `sudo apt install ./nexives-expertstream-nvidia_0.2.3_amd64.deb` (Debian, Ubuntu) or
+`sudo dnf install ./nexives-expertstream-nvidia-0.2.3-1.x86_64.rpm` (RHEL, Fedora, Amazon Linux).
 `expertstream service install` starts ExpertStream at login (`--at-boot`: when the computer boots); with Ollama
 installed as a system service, `sudo expertstream ollama on` once puts ExpertStream's models into Ollama's list.
 
